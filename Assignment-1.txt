@@ -1,0 +1,5 @@
+void main(){
+var name="Student of T1";
+var age=20;
+print("$name is $age years old");
+}
