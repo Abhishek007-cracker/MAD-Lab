@@ -30,3 +30,397 @@ print('min=$min');
 print('max=$max');
 print('avg=$avg');
 }
+
+Assignment-2:
+import 'package:flutter/material.dart';
+void main() => runApp(MyApp());
+class MyApp extends StatelessWidget {
+@override
+Widget build(BuildContext context) {
+return MaterialApp(
+// Application name
+title: 'Flutter Form Validation',
+theme: ThemeData(
+primarySwatch: Colors.blue,
+),
+home: MyHomePage(title: 'Flutter Form Validation'),
+);}}
+class MyHomePage extends StatefulWidget {
+final String title;
+const MyHomePage({Key? key, required this.title}) : super(key: key);
+@override
+_MyHomePageState createState() => _MyHomePageState();
+}
+class _MyHomePageState extends State<MyHomePage> {
+int _counter = 0;
+void _incrementCounter() {
+setState(() {
+_counter++;
+});}
+@override
+Widget build(BuildContext context) {
+return Scaffold(
+appBar: AppBar(
+title: Text(widget.title), ),
+body: Center(
+child: Column(
+mainAxisAlignment: MainAxisAlignment.center,
+children: <Widget>[
+Text(
+'You have pushed the button this many times:',
+),
+Text(
+'$_counter',
+style: TextStyle(fontSize: 25) ), ],),),
+floatingActionButton: FloatingActionButton(
+onPressed: _incrementCounter,
+tooltip: 'Increment',
+child: Icon(Icons.add), ),);}}
+
+Assignment 3:
+import 'package:flutter/material.dart';
+void main() => runApp(FormApp());
+class FormApp extends StatefulWidget {
+@override
+State<FormApp> createState() => _FormAppState();
+}
+class _FormAppState extends State<FormApp> {
+final _formKey = GlobalKey<FormState>();
+final nameRegex = RegExp(r'^[a-zA-Z\s]{15,}$');
+String? _name;
+String? validateName(String? value) {
+if (value == null || value.isEmpty) {
+return 'Please enter your name';
+} else if (!nameRegex.hasMatch(value)) {
+return 'Name should be minimum 15 characters and should have no special characters except a
+space';
+}
+return null;
+}
+void submitForm() {
+if (_formKey.currentState!.validate()) {
+_formKey.currentState!.save();
+// Do something with the form data, such as submitting it to a server
+print('Name: $_name');
+}
+}
+@override
+Widget build(BuildContext context) {
+return MaterialApp(
+home: Scaffold(
+appBar: AppBar(
+title: const Text("Ronit\'s App"),
+),
+body: Form(
+key: _formKey,
+child: Column(
+children: <Widget>[
+Padding(
+padding: const EdgeInsets.all(8.0),
+child: Row(
+children: <Widget>[
+const Text('BIO-DATA'),
+],
+),
+),
+Padding(
+padding: const EdgeInsets.all(8.0),
+child: Row(
+children: <Widget>[
+const Text('Personal Details'),
+],
+),
+),
+Padding(
+padding: const EdgeInsets.all(8.0),
+child: TextFormField(
+decoration: const InputDecoration(
+labelText: 'Name',
+),
+validator: validateName,
+onSaved: (value) => _name = value,
+),
+),
+Padding(
+padding: const EdgeInsets.all(8.0),
+child: TextFormField(
+decoration: const InputDecoration(
+labelText: 'Date of Birth',
+),
+),
+),
+Padding(
+padding: const EdgeInsets.all(8.0),
+child: Row(
+children: <Widget>[
+const Text('Gender'),
+Radio(
+value: 1,
+groupValue: 1,
+onChanged: (value) {},
+),
+const Text('Male'),
+Radio(
+value: 1,
+groupValue: 1,
+onChanged: (value) {},
+),
+const Text('Female'),
+],
+),
+),
+Padding(
+padding: const EdgeInsets.all(8.0),
+child: TextFormField(
+decoration: const InputDecoration(
+labelText: 'Address',
+),
+),
+),
+Padding(
+padding: const EdgeInsets.all(8.0),
+child: TextButton(
+onPressed: submitForm,
+child: const Text('Submit'),
+),
+),
+],
+),
+),
+),
+);
+}
+
+
+
+Assignment4:
+import 'package:flutter/material.dart';
+void main() {
+runApp(MyApp());
+}
+class MyApp extends StatelessWidget {
+@override
+Widget build(BuildContext context) {
+return MaterialApp(
+title: "Test",
+initialRoute: '/',
+routes: {
+'/': (context) => TestPage(),
+'/qualification': (context) => QualificationPage(),
+},
+);
+}
+}
+//add datamodel and stateful class
+class TestPage extends StatelessWidget {
+final nameController = TextEditingController();
+final dobController = TextEditingController();
+final addressController = TextEditingController();
+@override
+Widget build(BuildContext context) {
+return Scaffold(
+appBar: AppBar(
+title: Text('Personal Details'),
+),
+body: Padding(
+padding: const EdgeInsets.all(16.0),
+child: Form(
+child: Column(
+children: [
+TextFormField(
+controller: nameController,
+decoration: InputDecoration(
+labelText: 'Name',
+),
+),
+TextFormField(
+controller: dobController,
+decoration: InputDecoration(
+labelText: 'Date of Birth',
+),
+),
+DropdownButtonFormField(
+items: [
+DropdownMenuItem(
+child: Text('Male'),
+value: 'Male',
+),
+DropdownMenuItem(
+child: Text('Female'),
+value: 'Female',
+),
+],
+decoration: InputDecoration(
+labelText: 'Gender',
+),
+onChanged: (value) {},
+),
+TextFormField(
+controller: addressController,
+decoration: InputDecoration(
+labelText: 'Address',
+),
+),
+SizedBox(height: 20),
+Row(
+mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+children: [
+ElevatedButton(
+onPressed: () {
+showDialog(
+context: context,
+builder: (context) {
+return AlertDialog(
+title: Text(nameController.text.length < 15
+? "Invalid Name: \nCharacters in text should
+be greater than 15"
+: "Form Saved"),
+actions: [
+TextButton(
+onPressed: () {
+Navigator.of(context).pop();
+},
+child: Text('Close'),
+),
+],
+);
+},
+);
+},
+child: Text('Save'),
+),
+ElevatedButton(
+onPressed: () {
+nameController.clear();
+dobController.clear();
+addressController.clear();
+},
+child: Text('Clear'),
+),
+ElevatedButton(
+onPressed: () {
+Navigator.pushNamed(context, '/qualification');
+},
+child: Text('Next'),
+),
+],
+),
+],
+),
+),
+),
+);
+}
+}
+class QualificationPage extends StatelessWidget {
+final collController = TextEditingController();
+final percentController = TextEditingController();
+@override
+Widget build(BuildContext context) {
+List<String> doubleList =
+List<String>.generate(21, (index) => (2020 - index).toString());
+List<DropdownMenuItem> menuItemList = doubleList
+.map((val) => DropdownMenuItem(value: val, child: Text(val)))
+.toList();
+return Scaffold(
+appBar: AppBar(
+title: Text('Qualification Details'),
+),
+body: Padding(
+padding: const EdgeInsets.all(16.0),
+child: Form(
+child: Column(
+children: [
+DropdownButtonFormField(
+items: [
+DropdownMenuItem(
+child: Text('X'),
+value: 'X',
+),
+DropdownMenuItem(
+child: Text('XII'),
+value: 'XII',
+),
+DropdownMenuItem(
+child: Text('B.E.'),
+value: 'B.E.',
+),
+DropdownMenuItem(
+child: Text('M.E.'),
+value: 'M.E.',
+),
+],
+decoration: InputDecoration(
+labelText: 'Highest Degree',
+),
+onChanged: (value) {},
+),
+TextFormField(
+controller: collController,
+decoration: InputDecoration(
+labelText: 'College Name',
+),
+),
+TextFormField(
+controller: percentController,
+decoration: InputDecoration(
+labelText: 'Percentage Obtained',
+),
+),
+// ElevatedButton(
+// items: menuItemList,
+// decoration: InputDecoration(
+// labelText: 'Year of Passing',
+// ),
+// onChanged: (value) {},
+// ),
+SizedBox(height: 20),
+Row(
+mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+children: [
+ElevatedButton(
+onPressed: () {
+Navigator.of(context).pop();
+},
+child: Text('Back'),
+),
+ElevatedButton(
+onPressed: () {
+showDialog(
+context: context,
+builder: (context) {
+return AlertDialog(
+title: Text("Form Saved"),
+actions: [
+TextButton(
+onPressed: () {
+Navigator.of(context).pop();
+},
+child: Text('Close'),
+),
+],
+);
+},
+);
+},
+child: Text('Save'),
+),
+ElevatedButton(
+onPressed: () {
+collController.clear();
+percentController.clear();
+},
+child: Text('Clear'),
+),
+],
+),
+],
+),
+),
+),
+);
+}
+}
+
+Assignment 5:
+
