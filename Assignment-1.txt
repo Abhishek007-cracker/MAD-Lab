@@ -3,3 +3,30 @@ var name="Student of T1";
 var age=20;
 print("$name is $age years old");
 }
+//2
+void main(){
+var age=20;
+var death=100-age;
+print('$death years left till you die')
+}
+//3
+void main(){
+var arr=[60,20,100,40,90,10,70,80,50,30];
+print(arr);
+var max,min,avg;
+max=arr[0];
+min=arr[0];
+var len=arr.length;
+var sum=0
+for(var i=0;i<len;i++){
+sum=sum+arr[i];
+if(arr[i]>max)
+max=arr[i];
+if(arr[i]<min)
+min=arr[i];
+}
+avg=sum/10;
+print('min=$min');
+print('max=$max');
+print('avg=$avg');
+}
